@@ -1,0 +1,53 @@
+# Install: pre-commit install
+# Run: pre-commit run --all-files
+
+repos:
+  # ==============================
+  # Basic check
+  # ==============================
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-private-key          # catches private keys
+      - id: mixed-line-ending
+
+  # ==============================
+  # Ruff — linter + autofix
+  # ==============================
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.7
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  # ==============================
+  # Black - formatter
+  # ==============================
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language_version: python3.11
+
+  # ==============================
+  # Mypy - types (Optional)
+  # ==============================
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.10.0
+  #   hooks:
+  #     - id: mypy
+  #       additional_dependencies: [pydantic, types-requests]
+
+  # ==============================
+  # Secrets check (gitleaks)
+  # ==============================
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.3
+    hooks:
+      - id: gitleaks
