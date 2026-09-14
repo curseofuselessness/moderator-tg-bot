@@ -1,4 +1,5 @@
 """Paths to project folders."""
+
 from pathlib import Path
 
 # shared/config/paths.py -> shared/config -> shared -> root
