@@ -10,12 +10,12 @@ merged, cleaned.
 | Source | Path | Description |
 |---|---|---|
 | Downloaded datasets | `data/raw/` | HF, Kaggle |
-| Manual labeling | `data/external/` | 500 examples (WIP) |
-| Processed | `data/processed/` | Ready splits |
+| Manual labeling | `data/external/` | 500 examples |
+| Processed | `data/processed/` | Clean data |
 
 ## Data format
 
-All datasets are normalized to a unified format:
+All datasets in `data/processed/` are normalized to a unified format:
 
 | Column | Type | Description |
 |---|---|---|
@@ -25,20 +25,21 @@ All datasets are normalized to a unified format:
 
 ```mermaid
 flowchart TD
-    raw[data/raw/] --> load
-    ext[data/external/] --> load
+    raw[data/raw/] --> clean
+    ext[data/external/] --> clean
 
-    load[load.py<br/>load + merge + clean] --> eda
-    eda[EDA<br/>01_eda.ipynb] --> filters
-    filters[preprocess.py<br/>normalization] --> all_clean
+    clean[clean] --> all_clean
+    all_clean[data/processed/] --> merge
+    merge[load.py <br> merge data] --> eda
+    eda[EDA]
 
-    all_clean[processed/]
+
 ```
 
 ## Steps
 
 ### 1. Loading
-`training/dataset/load.py` — loads all sources, normalizes to `text, label` format, merges them.
+`training/dataset/load.py` — merge all clean data from `data/processed/`.
 
 ```python
 from training.dataset.load import load_all_data
@@ -47,9 +48,6 @@ df = load_all_data()
 
 ### 2. EDA
 `notebooks/01_eda.ipynb` — exploratory analysis: class balance, text length, examples.
-
-### 3. Preprocessing
-`training/dataset/preprocess.py` — text normalization (lowercase, URLs, emojis), deduplication.
 
 
 ## Notes
