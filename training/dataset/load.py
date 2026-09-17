@@ -14,7 +14,7 @@ def load_raw_01() -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"{path} not found")
 
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, dtype={"toxic": int})
 
     df = df.rename(columns={"comment": "text", "toxic": "label"})  # Rename columns
 
