@@ -24,35 +24,12 @@ def load_raw_01() -> pd.DataFrame:
 # ==============================
 # Main function
 # ==============================
-def load_all_data(
-    source: str = "raw",  # "raw" or "processed"
-    include_external: bool = True,
-    drop_duplicates: bool = True,
-) -> pd.DataFrame:
-    """Load data from one source.
-
-    Args:
-        source: "raw" — downloaded data, "processed" — processed data
-        include_external: include your own labeled data
-        drop_duplicates: delete duplicates
+def load_all_data() -> pd.DataFrame:
     """
-    if source not in {"raw", "processed"}:
-        raise ValueError(f"Unknown source: {source}")
+    Load data from one source.
+    """
 
-    dfs = []
-
-    if source == "raw":
-        dfs.append(load_raw_01())
-        # dfs.append(load_raw_02())   # добавить позже
-
-    # elif source == "processed":
-    # dfs.append(load_processed_01())   # добавить позже
-
-    # if include_external:
-    # dfs.append(load_external()) # добавить позже
-
-    if not dfs:
-        raise ValueError("No data sources enabled")
+    dfs = [load_raw_01()]
 
     df = pd.concat(dfs, ignore_index=True)
 
