@@ -25,14 +25,14 @@ All datasets in `data/processed/` are normalized to a unified format:
 
 ```mermaid
 flowchart TD
-    raw[data/raw/] --> clean
-    ext[data/external/] --> clean
+    raw[data/raw/] --> load
+    ext[data/external/] --> load
 
-    clean[clean] --> all_clean
-    all_clean[data/processed/] --> merge
-    merge[load.py <br> merge data] --> eda
-    eda[EDA]
+    load[load.py: load + merge] --> eda
+    eda[EDA: 01_eda.ipynb] --> prepare
 
+    prepare[prepare.py: preprocess] --> all_clean
+    all_clean[data/processed/all_clean.csv]
 
 ```
 
