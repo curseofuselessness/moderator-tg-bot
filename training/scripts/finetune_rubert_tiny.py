@@ -14,7 +14,7 @@ from training.dataset.split import load_splits
 
 MODEL_NAME = "cointegrated/rubert-tiny2"
 MAX_LENGTH = 128
-OUTPUT_DIR = "artifacts/rubert-tiny"
+OUTPUT_DIR = "artifacts/rubert-tiny2"
 
 
 def get_device():
@@ -131,6 +131,11 @@ def main():
     )
     trainer.train()
 
+    # Save model and tokenizer to artifacts/rubert-tiny2
+    trainer.save_model("artifacts/rubert-tiny2")
+    tokenizer.save_pretrained("artifacts/rubert-tiny2")
+    print("Model and tokenizer saved to artifacts/rubert-tiny2")
+
     # 6. Predict
     preds = trainer.predict(val_dataset)
     predicted_labels = preds.predictions.argmax(axis=-1)
@@ -144,6 +149,11 @@ def main():
     print(f"F1:        {f1:.4f}")
     print(f"Precision: {precision:.4f}")
     print(f"Recall:    {recall:.4f}")
+
+    print("\n--- Comparison with NB baseline ---")
+    print("NB F1:        0.8670")
+    print(f"Rubert F1:    {f1:.4f}")
+    print(f"Improvement:  {f1 - 0.8670:+.4f}")
 
 
 if __name__ == "__main__":
