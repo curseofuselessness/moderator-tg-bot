@@ -1,4 +1,4 @@
-"""Baseline: rubert-tiny fine-tuned on toxic comments."""
+"""Fine-tune rubert-tiny2 on toxic comments."""
 
 import torch
 from datasets import Dataset
@@ -140,7 +140,7 @@ def main():
     precision = precision_score(val["label"], predicted_labels)
     recall = recall_score(val["label"], predicted_labels)
 
-    print("Baseline: rubert-tiny")
+    print("Fine-tune: rubert-tiny2")
     print(f"F1:        {f1:.4f}")
     print(f"Precision: {precision:.4f}")
     print(f"Recall:    {recall:.4f}")
